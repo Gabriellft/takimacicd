@@ -7,7 +7,7 @@ on:
     branches: [main, develop]
 
 jobs:
-  test-backend: 
+  test-backend:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2.5.0
@@ -16,9 +16,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Build and test with Maven
-        run: mvn clean verify
-        working-directory: simple-api
+
+      - name: Build and test with Maven Sonar
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=tp2-takima-key_tp2-takima-key -Dsonar.organization=tp2-takima-key -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --file ./simple-api/pom.xml
 
   push_to_registry:
     needs: test-backend
@@ -27,13 +27,13 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
-      
+
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      
+
       - name: Build and push backend Docker image
         uses: docker/build-push-action@v3
         with:
