@@ -16,13 +16,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Build and test with Maven
-        run: mvn clean verify
-        working-directory: simple-api
+      
 
       - name: Build and test with Maven Sonar
         run: mvn -B verify sonar:sonar -Dsonar.projectKey=devops-2023 -Dsonar.organization=tp2-takima-key -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --file ./simple-api/pom.xml
-        working-directory: simple-api
+        working-directory: ./simple-api
   push_to_registry:
     needs: test-backend
     runs-on: ubuntu-latest
