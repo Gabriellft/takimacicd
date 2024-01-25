@@ -27,10 +27,12 @@ services:
       - backend
 
   frontend:
-    build: ./devops-front-main
+    image: gabriellft/tp-devops-devops-front-main
     container_name: my-front
     networks:
       - my-network
+    ports:
+      - "8081:8081"
 
 volumes:
   db-volume:
