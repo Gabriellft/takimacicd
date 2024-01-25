@@ -54,3 +54,11 @@ jobs:
           context: ./http-server
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tp-devops-httpd:latest
           push: true
+
+
+      - name: Build and push front Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./devops-front-main
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tp-devops-devops-front-main:latest
+          push: true
